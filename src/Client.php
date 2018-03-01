@@ -31,19 +31,13 @@ class Client
 
     public function all()
     {
-        // if $this->username
-        //      Zttp:: ...
-        // else
-        //      Zttp:: ...
+        // results = this -> callApi(...)
         // return collect (results -> TorrentEntry)
     }
 
     public function find($id)
     {
-        // if $this->username
-        //      Zttp:: ...
-        // else
-        //      Zttp:: ...
+        // result = this -> callApi(...)
         // return result -> TorrentEntry
     }
 
@@ -55,6 +49,11 @@ class Client
 
     protected function callApi($message)
     {
-        // Zttp:: ...
+        // if $this->username
+        //      Zttp:: ...
+        // else
+        //      Zttp:: ...
+        
+        return $result;
     }
 }
