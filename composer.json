@@ -1,0 +1,21 @@
+{
+    "name": "ohnotnow/laravel-transmission",
+    "description": "Laravel wrapper for the Transmission torrent server API",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ohnotnow",
+            "email": "billybofh@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Ohffs\\Transmission\\": "src/"
+        }
+    },
+    "require": {},
+    "require-dev": {
+        "orchestra/testbench": "~3.0"
+    }
+}
