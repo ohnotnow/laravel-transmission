@@ -53,7 +53,7 @@ class Client
         //      Zttp:: ...
         // else
         //      Zttp:: ...
-        
+
         return $result;
     }
 }
