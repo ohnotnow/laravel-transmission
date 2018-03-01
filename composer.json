@@ -11,10 +11,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Ohffs\\Transmission\\": "src/"
+            "Ohffs\\LaravelTransmission\\": "src/"
         }
     },
-    "require": {},
+    "require": {
+        "kitetail/zttp": "^0.3.0"
+    },
     "require-dev": {
         "orchestra/testbench": "~3.0"
     }
