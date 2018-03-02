@@ -48,20 +48,33 @@ class Client
 
     public function find($id)
     {
-        // result = this -> callApi(...)
-        // return result -> TorrentEntry
+        $response = $this->callApi('torrent-get', ['ids' => [$id], 'fields' => $this->defaultFields]);
+        if (count($response->json()['arguments']['torrents']) == 0) {
+            return null;
+        }
+        return new TorrentEntry($response->json()['arguments']['torrents'][0]);
     }
 
     public function findOrFail($id)
     {
-        // if not this->find -> throw Exception
-        // return result
+        $torrent = $this->find($id);
+        if (!$torrent) {
+            throw new \RuntimeException('No such torrent');
+        }
+        return $torrent;
     }
 
     public function add($filename)
     {
+        $response = $this->callApi('torrent-add', ['filename' => $filename, 'paused' => true]);
+        return new TorrentEntry($response->json()['arguments']['torrent-added']);
     }
 
+    public function remove($id)
+    {
+        $response = $this->callApi('torrent-remove', ['ids' => [$id]]);
+        return true;
+    }
     protected function transmissionUrl()
     {
         return $this->hostname . ':' . $this->port . '/transmission/rpc';

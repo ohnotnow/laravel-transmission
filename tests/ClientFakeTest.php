@@ -4,7 +4,7 @@ namespace Tests;
 
 use Ohffs\LaravelTransmission\FakeClient;
 
-class FakeClientTest extends TestCase
+class ClientFakeTest extends TestCase
 {
     use CommonTests;
 

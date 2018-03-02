@@ -56,8 +56,8 @@ class FakeClient
     public function add($filename)
     {
         $entry = new TorrentEntry([
-            'filename' => $filename,
-            'torrent_id' => rand(1, 1000000),
+            'name' => $filename,
+            'id' => rand(1, 1000000),
         ]);
         $this->torrents->push($entry);
         return $entry;

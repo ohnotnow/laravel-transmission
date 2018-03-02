@@ -8,24 +8,25 @@ trait CommonTests
     public function can_get_a_collection_of_all_torrents()
     {
         $client = $this->getClient();
-        $client->add('test1.torrent');
-        $client->add('test2.torrent');
+        $torrent = $client->add(__DIR__ . '/data/asimov_foundation_archive_org.torrent');
 
         $torrents = $client->all();
 
         $this->assertCount(2, $torrents);
+        $client->remove($torrent->id);
     }
 
     /** @test */
     public function can_get_a_single_torrent()
     {
         $client = $this->getClient();
-        $torrent1 = $client->add('test1.torrent');
-        $torrent2 = $client->add('test2.torrent');
+        sleep(1);
+        $torrent1 = $client->add(__DIR__ . '/data/asimov_foundation_archive_org.torrent');
 
-        $torrent = $client->find($torrent1->torrent_id);
+        $torrent = $client->find($torrent1->id);
 
-        $this->assertEquals('test1.torrent', $torrent->filename);
+        $this->assertEquals('IsaacAsimovFoundation6Of864kb', $torrent->name);
+        $client->remove($torrent->id);
     }
 
     /** @test */
