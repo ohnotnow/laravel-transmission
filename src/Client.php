@@ -16,6 +16,12 @@ class Client
 
     protected $session;
 
+    protected $token;
+
+    protected $defaultFields = [
+        "id", "name", "status", "doneDate", "haveValid", "totalSize", "eta", "rateDownload", "rateUpload"
+    ];
+
     public function __construct($hostname = null, $port = null)
     {
         $this->hostname = config('transmission.hostname', $hostname);
@@ -24,15 +30,20 @@ class Client
 
     public function authenticate($username = null, $password = null)
     {
-        $this->username = config('transmission.username', $username);
-        $this->password = config('transmission.password', $password);
+        $this->username = $username ?: config('transmission.username');
+        $this->password = $password ?: config('transmission.password');
         return $this;
     }
 
     public function all()
     {
-        // results = this -> callApi(...)
-        // return collect (results -> TorrentEntry)
+        $response = $this->callApi('torrent-get', ['fields' => $this->defaultFields]);
+        $data = $response->json();
+        $torrents = collect([]);
+        foreach ($data['arguments']['torrents'] as $torrentData) {
+            $torrents->push(new TorrentEntry($torrentData));
+        }
+        return $torrents;
     }
 
     public function find($id)
@@ -47,13 +58,26 @@ class Client
         // return result
     }
 
-    protected function callApi($message)
+    public function add($filename)
     {
-        // if $this->username
-        //      Zttp:: ...
-        // else
-        //      Zttp:: ...
+    }
 
-        return $result;
+    protected function transmissionUrl()
+    {
+        return $this->hostname . ':' . $this->port . '/transmission/rpc';
+    }
+
+    protected function callApi($methodName, $arguments = [])
+    {
+        $response = Zttp::withBasicAuth($this->username, $this->password)
+                        ->withHeaders(['x-transmission-session-id' => $this->token])
+                        ->post($this->transmissionUrl(), ['method' => $methodName, 'arguments' => $arguments]);
+
+        if ($response->status() == 409) {
+            $this->token = $response->header('X-Transmission-Session-Id');
+            $response = $this->callApi($methodName, $arguments);
+        }
+
+        return $response;
     }
 }

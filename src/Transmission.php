@@ -1,5 +1,7 @@
 <?php
 
+namespace Ohffs\LaravelTransmission;
+
 use Illuminate\Support\Facades\Facade;
 use Ohffs\LaravelTransmission\Client;
 

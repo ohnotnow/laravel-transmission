@@ -14,10 +14,25 @@
             "Ohffs\\LaravelTransmission\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "require": {
         "kitetail/zttp": "^0.3.0"
     },
     "require-dev": {
         "orchestra/testbench": "~3.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ohffs\\LaravelTransmission\\TransmissionServiceProvider"
+            ],
+            "aliases": {
+                "Transmission": "Ohffs\\LaravelTransmission\\Transmission"
+            }
+        }
     }
 }

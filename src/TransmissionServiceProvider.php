@@ -7,15 +7,21 @@ use Ohffs\LaravelTransmission\Client;
 
 class TransmissionServiceProvider extends ServiceProvider
 {
-    protected $defer = true;
+    public function boot()
+    {
+        $this->publishes([
+            __DIR__.'/config/transmission.php' => config_path('transmission.php'),
+        ]);
+    }
 
-    /**
-     * Register bindings in the container.
-     *
-     * @return void
-     */
     public function register()
     {
-        $this->app->singleton(Client::class);
+        $this->mergeConfigFrom(__DIR__.'/config/transmission.php', 'transmission');
+        $this->app->bind(Client::class, function ($app) {
+            return new Client(
+                config('transmission.hostname'),
+                config('transmission.port')
+            );
+        });
     }
 }
