@@ -34,13 +34,13 @@ class FakeClient
 
     public function all()
     {
-        return $this->torrents;
+        return collect($this->torrents->toArray());
     }
 
     public function find($id)
     {
         return $this->torrents->first(function ($torrent, $key) use ($id) {
-            return $torrent->torrent_id === $id;
+            return $torrent->id === $id;
         });
     }
 
@@ -53,7 +53,7 @@ class FakeClient
         return $torrent;
     }
 
-    public function add($filename)
+    public function addPaused($filename)
     {
         $entry = new TorrentEntry([
             'name' => $filename,
@@ -61,6 +61,13 @@ class FakeClient
         ]);
         $this->torrents->push($entry);
         return $entry;
+    }
+
+    public function remove($id)
+    {
+        $this->torrents = $this->torrents->filter(function ($torrent, $key) use ($id) {
+            return $torrent->id != $id;
+        });
     }
 
     protected function callApi($message)

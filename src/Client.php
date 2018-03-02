@@ -64,7 +64,7 @@ class Client
         return $torrent;
     }
 
-    public function add($filename)
+    public function addPaused($filename)
     {
         $response = $this->callApi('torrent-add', ['filename' => $filename, 'paused' => true]);
         return new TorrentEntry($response->json()['arguments']['torrent-added']);

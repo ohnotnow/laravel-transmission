@@ -8,11 +8,14 @@ trait CommonTests
     public function can_get_a_collection_of_all_torrents()
     {
         $client = $this->getClient();
-        $torrent = $client->add(__DIR__ . '/data/asimov_foundation_archive_org.torrent');
+
+        $originalTorrents = $client->all();
+
+        $torrent = $client->addPaused(__DIR__ . '/data/asimov_foundation_archive_org.torrent');
 
         $torrents = $client->all();
 
-        $this->assertCount(2, $torrents);
+        $this->assertEquals($originalTorrents->count() + 1, $torrents->count());
         $client->remove($torrent->id);
     }
 
@@ -21,7 +24,7 @@ trait CommonTests
     {
         $client = $this->getClient();
         sleep(1);
-        $torrent1 = $client->add(__DIR__ . '/data/asimov_foundation_archive_org.torrent');
+        $torrent1 = $client->addPaused(__DIR__ . '/data/asimov_foundation_archive_org.torrent');
 
         $torrent = $client->find($torrent1->id);
 
