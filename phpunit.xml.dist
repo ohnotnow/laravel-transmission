@@ -7,4 +7,5 @@
   <php>
     <env name="TRANSMISSION_USERNAME" value="username"/>
     <env name="TRANSMISSION_PASSWORD" value="secret"/>
+  </php>
 </phpunit>
