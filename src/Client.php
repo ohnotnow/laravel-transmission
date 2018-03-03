@@ -19,7 +19,7 @@ class Client
     protected $token;
 
     protected $defaultFields = [
-        "id", "name", "status", "doneDate", "haveValid", "totalSize", "eta", "rateDownload", "rateUpload", "downloadDir"
+        "id", "name", "status", "doneDate", "haveValid", "totalSize", "eta", "rateDownload", "rateUpload", "downloadDir", "percentDone"
     ];
 
     public function __construct($hostname = null, $port = null)
