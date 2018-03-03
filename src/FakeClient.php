@@ -55,9 +55,11 @@ class FakeClient
 
     public function addPaused($filename)
     {
+        $fileInfo = $this->extractTorrentInfo($filename);
         $entry = new TorrentEntry([
-            'name' => $filename,
+            'name' => $fileInfo['info']['name'],
             'id' => rand(1, 1000000),
+            'size' => $fileInfo['info']['piece length'],
         ]);
         $this->torrents->push($entry);
         return $entry;
@@ -78,5 +80,13 @@ class FakeClient
         //      Zttp:: ...
 
         return $result;
+    }
+
+    protected function extractTorrentInfo($filename)
+    {
+        $encoder = new \PHP\BitTorrent\Encoder();
+        $decoder = new \PHP\BitTorrent\Decoder($encoder);
+
+        return $decoder->decodeFile($filename);
     }
 }
