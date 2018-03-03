@@ -23,12 +23,25 @@ trait CommonTests
     public function can_get_a_single_torrent()
     {
         $client = $this->getClient();
-        sleep(1);
+        sleep(1); // the api can be a bit slow, so force a delay so the test has clean data :-/
         $torrent1 = $client->addPaused(__DIR__ . '/data/asimov_foundation_archive_org.torrent');
 
         $torrent = $client->find($torrent1->id);
 
-        $this->assertEquals('IsaacAsimovFoundation6Of864kb', $torrent->name);
+        $this->assertEquals(
+            [
+              "doneDate" => 0,
+              "eta" => -1,
+              "haveValid" => 0,
+              "id" => $torrent1->id,
+              "name" => "IsaacAsimovFoundation6Of864kb",
+              "rateDownload" => 0,
+              "rateUpload" => 0,
+              "status" => 2,
+              "totalSize" => 364514248,
+            ],
+            $torrent->toArray()
+        );
         $client->remove($torrent->id);
     }
 

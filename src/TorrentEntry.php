@@ -19,4 +19,9 @@ class TorrentEntry
 
         return null;
     }
+
+    public function toArray()
+    {
+        return $this->attributes;
+    }
 }

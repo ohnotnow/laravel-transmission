@@ -59,7 +59,13 @@ class FakeClient
         $entry = new TorrentEntry([
             'name' => $fileInfo['info']['name'],
             'id' => rand(1, 1000000),
-            'size' => $fileInfo['info']['piece length'],
+            'doneDate' => 0,
+            'eta' => -1,
+            'haveValid' => 0,
+            'rateDownload' => 0,
+            'rateUpload' => 0,
+            'status' => 2,
+            'totalSize' => 364514248,
         ]);
         $this->torrents->push($entry);
         return $entry;
@@ -70,16 +76,6 @@ class FakeClient
         $this->torrents = $this->torrents->filter(function ($torrent, $key) use ($id) {
             return $torrent->id != $id;
         });
-    }
-
-    protected function callApi($message)
-    {
-        // if $this->username
-        //      Zttp:: ...
-        // else
-        //      Zttp:: ...
-
-        return $result;
     }
 
     protected function extractTorrentInfo($filename)

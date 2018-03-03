@@ -82,15 +82,32 @@ class Client
 
     protected function callApi($methodName, $arguments = [])
     {
-        $response = Zttp::withBasicAuth($this->username, $this->password)
-                        ->withHeaders(['x-transmission-session-id' => $this->token])
-                        ->post($this->transmissionUrl(), ['method' => $methodName, 'arguments' => $arguments]);
+        $response = $this->buildInitialRequest()->post(
+            $this->transmissionUrl(),
+            [
+                'method' => $methodName,
+                'arguments' => $arguments
+            ]
+        );
 
         if ($response->status() == 409) {
             $this->token = $response->header('X-Transmission-Session-Id');
             $response = $this->callApi($methodName, $arguments);
         }
 
+        if ($response->status() == 401) {
+            throw new \InvalidArgumentException('Authorisation Failed');
+        }
+
         return $response;
+    }
+
+    protected function buildInitialRequest()
+    {
+        if ($this->username) {
+            return Zttp::withBasicAuth($this->username, $this->password)
+                    ->withHeaders(['x-transmission-session-id' => $this->token]);
+        }
+        return Zttp::withHeaders(['x-transmission-session-id' => $this->token]);
     }
 }
