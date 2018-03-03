@@ -28,7 +28,7 @@ trait CommonTests
 
         $torrent = $client->find($torrent1->id);
 
-        $this->assertEquals(
+        $this->assertArraySubset(
             [
               "doneDate" => 0,
               "eta" => -1,
@@ -39,9 +39,11 @@ trait CommonTests
               "rateUpload" => 0,
               "status" => 2,
               "totalSize" => 364514248,
+              "percentDone" => 0,
             ],
             $torrent->toArray()
         );
+        $this->assertArrayHasKey('downloadDir', $torrent->toArray());
         $client->remove($torrent->id);
     }
 

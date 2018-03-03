@@ -66,6 +66,8 @@ class FakeClient
             'rateUpload' => 0,
             'status' => 2,
             'totalSize' => 364514248,
+            'downloadDir' => '/tmp',
+            'percentDone' => 0,
         ]);
         $this->torrents->push($entry);
         return $entry;
