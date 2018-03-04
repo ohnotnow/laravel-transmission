@@ -87,6 +87,7 @@ class Client
         $response = $this->callApi('torrent-remove', ['ids' => [$id]]);
         return true;
     }
+
     protected function transmissionUrl()
     {
         return $this->hostname . ':' . $this->port . '/transmission/rpc';
@@ -116,10 +117,10 @@ class Client
 
     protected function buildBaseRequest()
     {
+        $query = Zttp::withHeaders(['x-transmission-session-id' => $this->token]);
         if ($this->username) {
-            return Zttp::withBasicAuth($this->username, $this->password)
-                    ->withHeaders(['x-transmission-session-id' => $this->token]);
+            $query = $query->withBasicAuth($this->username, $this->password);
         }
-        return Zttp::withHeaders(['x-transmission-session-id' => $this->token]);
+        return $query;
     }
 }
