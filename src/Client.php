@@ -19,13 +19,25 @@ class Client
     protected $token;
 
     protected $defaultFields = [
-        "id", "name", "status", "doneDate", "haveValid", "totalSize", "eta", "rateDownload", "rateUpload", "downloadDir", "percentDone"
+        "id",
+        "name",
+        "status",
+        "doneDate",
+        "haveValid",
+        "totalSize",
+        "eta",
+        "rateDownload",
+        "rateUpload",
+        "downloadDir",
+        "percentDone",
     ];
 
-    public function __construct($hostname = null, $port = null)
+    public function __construct($hostname = null, $port = null, $username = null, $password = null)
     {
-        $this->hostname = config('transmission.hostname', $hostname);
-        $this->port = config('transmission.port', $port);
+        $this->hostname = $hostname ?: config('transmission.hostname');
+        $this->port = $port ?: config('transmission.port');
+        $this->username = $username ?: config('transmission.username');
+        $this->password = $password ?: config('transmission.password');
     }
 
     public function authenticate($username = null, $password = null)
@@ -82,7 +94,7 @@ class Client
 
     protected function callApi($methodName, $arguments = [])
     {
-        $response = $this->buildInitialRequest()->post(
+        $response = $this->buildBaseRequest()->post(
             $this->transmissionUrl(),
             [
                 'method' => $methodName,
@@ -102,7 +114,7 @@ class Client
         return $response;
     }
 
-    protected function buildInitialRequest()
+    protected function buildBaseRequest()
     {
         if ($this->username) {
             return Zttp::withBasicAuth($this->username, $this->password)

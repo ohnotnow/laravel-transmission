@@ -10,6 +10,6 @@ class ClientTest extends TestCase
 
     protected function getClient()
     {
-        return app(Client::class)->authenticate();
+        return app(Client::class);
     }
 }
