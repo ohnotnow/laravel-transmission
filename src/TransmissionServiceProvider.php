@@ -4,6 +4,7 @@ namespace Ohffs\LaravelTransmission;
 
 use Illuminate\Support\ServiceProvider;
 use Ohffs\LaravelTransmission\Client;
+use Ohffs\Transmission\Client as TransmissionClient;
 
 class TransmissionServiceProvider extends ServiceProvider
 {
@@ -19,8 +20,12 @@ class TransmissionServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/config/transmission.php', 'transmission');
         $this->app->bind(Client::class, function ($app) {
             return new Client(
-                config('transmission.hostname'),
-                config('transmission.port')
+                new TransmissionClient(
+                    config('transmission.hostname'),
+                    config('transmission.port'),
+                    config('transmission.username'),
+                    config('transmission.password')
+                )
             );
         });
     }

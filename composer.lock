@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f0a4c6fe341733b0a69787b8967d921d",
+    "content-hash": "cc17f20b9eb23854c49b7091649c710a",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -855,6 +855,46 @@
                 "time"
             ],
             "time": "2018-02-28T09:22:05+00:00"
+        },
+        {
+            "name": "ohffs/transmission-client",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ohnotnow/transmission-client.git",
+                "reference": "164edec13c480af0ddb5ed2a3dea06879bccf269"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ohnotnow/transmission-client/zipball/164edec13c480af0ddb5ed2a3dea06879bccf269",
+                "reference": "164edec13c480af0ddb5ed2a3dea06879bccf269",
+                "shasum": ""
+            },
+            "require": {
+                "kitetail/zttp": "^0.3.0"
+            },
+            "require-dev": {
+                "christeredvartsen/php-bittorrent": "^1.1",
+                "phpunit/phpunit": "^7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ohffs\\Transmission\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ohffs",
+                    "email": "billybofh@gmail.com"
+                }
+            ],
+            "description": "PHP library for the Transmission BitTorrent client",
+            "time": "2018-03-07T12:48:28+00:00"
         },
         {
             "name": "paragonie/random_compat",

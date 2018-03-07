@@ -20,7 +20,8 @@
         }
     },
     "require": {
-        "kitetail/zttp": "^0.3.0"
+        "kitetail/zttp": "^0.3.0",
+        "ohffs/transmission-client": "^1.0"
     },
     "require-dev": {
         "orchestra/testbench": "~3.0",
