@@ -8,6 +8,8 @@ client's API.
 For now it only supports getting a list of all current torrents, fetching a specific torrent and adding
 a new torrent in 'paused' mode.  This was all I needed for my purposes in [transcopy](https://github.com/ohnotnow/transcopy).
 
+If you want a plain PHP version without the Laravel stuff have a look at [the underlying library](https://github.com/ohnotnow/transmission-client).
+
 # Installing
 
 Assuming you have [composer](https://getcomposer.org/) available :
@@ -59,17 +61,24 @@ class Whatever
     public function index()
     {
         return $this->transmission->all();
-        // or if you are using a username/password
-        return $this->transmission->authenticate()->all();
     }
 
     public function show($id)
     {
         return $this->transmission->find($id);
-        // or again if using a username/password
-        return $this->transmission->authenticate()->find($id);
     }
 }
+```
+
+You can also use the Transmission facade if you wish :
+
+```php
+use Ohffs\LaravelTransmission\Transmission;
+
+// ...
+
+$allTorrents = Transmission::all();
+$singleTorrent = Transmission::find(1);
 ```
 
 The find() method returns a single TorrentEntry class, the all() method returns a
